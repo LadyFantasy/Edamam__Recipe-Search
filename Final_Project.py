@@ -99,9 +99,9 @@ def run():
     
     
     
-    if(input_random == "r" or input_random == "random" or input_random == "random"):
+    if(input_random == "r" or input_random == "random"):
         random_recipe_search(ingredient, api, language)
-    elif(input_random =="c" or input_random =="check"or input_random =="check"):
+    elif(input_random =="c" or input_random =="check):
         recipe_search(ingredient, api, language)
     else:
         input_random
