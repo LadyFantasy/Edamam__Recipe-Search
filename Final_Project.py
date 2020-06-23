@@ -32,15 +32,6 @@ import requests
 import random
 
 
-def get_api_data(api, ingredient):
-    app_id = '71ca93f8'
-    app_key = '11b48d20765f456984566e814c328384'
-          
-    result = requests.get('https://{}.edamam.com/search?q={}&app_id={}&app_key={}'.format(api, ingredient, app_id,
-    app_key))
-    data = result.json()["hits"]
-    
-    return data
 
 
 # function that searches all the recipes
@@ -55,6 +46,7 @@ def recipe_search(ingredient, api, language):
         # print("Link:")
         print(recipe['uri'])
         print("==========================")
+ 
     
  
 # function that searches a random recipe
@@ -62,8 +54,7 @@ def random_recipe_search(ingredient, api, language):
     
     all_recipes = get_api_data(api, ingredient)
 
-    random_number = random.randint(0, len(all_recipes)-1)
-    
+    random_number = random.randint(0, len(all_recipes)-1)    
     random_recipe = all_recipes[random_number]
     recipe = random_recipe["recipe"]
 
@@ -74,7 +65,20 @@ def random_recipe_search(ingredient, api, language):
     for ingredient in recipe["ingredientLines"]:
         print(f"-{ingredient}")
    
+   
+   
+# gets data from the API
+def get_api_data(api, ingredient):
+    app_id = '71ca93f8'
+    app_key = '11b48d20765f456984566e814c328384'
+          
+    result = requests.get('https://{}.edamam.com/search?q={}&app_id={}&app_key={}'.format(api, ingredient, app_id,
+    app_key))
+    data = result.json()["hits"]
     
+    return data
+
+
     
     
 # function that gets all the inputs from the user (language, ingredient and random/all recipes) and the first one to execute
@@ -107,9 +111,5 @@ def run():
 run()
 
 
-
-# **********************************
-# THINGS TO FIX SO FAR: the requests.get() is in both functions (recipe_search and random_recipe_search). It's repetitive and should be in it's own function, but I tried and it didn't work
-# **********************************
 
 
