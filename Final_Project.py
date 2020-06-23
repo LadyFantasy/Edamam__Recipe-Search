@@ -31,16 +31,22 @@
 import requests
 import random
 
-# function that searches all the recipes
-def recipe_search(ingredient, api):
+
+def get_api_data(api, ingredient):
     app_id = '71ca93f8'
     app_key = '11b48d20765f456984566e814c328384'
-        
+          
     result = requests.get('https://{}.edamam.com/search?q={}&app_id={}&app_key={}'.format(api, ingredient, app_id,
     app_key))
-    data = result.json()
+    data = result.json()["hits"]
     
-    results = data['hits']
+    return data
+
+
+# function that searches all the recipes
+def recipe_search(ingredient, api, language):  
+    
+    results = get_api_data(api, ingredient)
     
     for result in results:
         recipe = result['recipe']
@@ -52,23 +58,17 @@ def recipe_search(ingredient, api):
     
  
 # function that searches a random recipe
-def random_recipe_search(ingredient, api):
-    app_id = '71ca93f8'
-    app_key = '11b48d20765f456984566e814c328384'
-          
-    result = requests.get('https://{}.edamam.com/search?q={}&app_id={}&app_key={}'.format(api, ingredient, app_id,
-    app_key))
-    data = result.json()
+def random_recipe_search(ingredient, api, language):
     
-    all_recipes = data["hits"]
+    all_recipes = get_api_data(api, ingredient)
 
-    random_number = random.randint(0, len(all_recipes))
+    random_number = random.randint(0, len(all_recipes)-1)
     
     random_recipe = all_recipes[random_number]
     recipe = random_recipe["recipe"]
-    # print("Recipe:")
+
+      
     print(recipe["label"])
-    # print("Link:")
     print(recipe["uri"])
     print("Ingredients:")
     for ingredient in recipe["ingredientLines"]:
@@ -79,9 +79,8 @@ def random_recipe_search(ingredient, api):
     
 # function that gets all the inputs from the user (language, ingredient and random/all recipes) and the first one to execute
 def run():   
-    api = ""
-    input_random = ""
-    language = input("Do you want to search in English or Spanish? ")
+
+    language = input("Do you want to search in English or Spanish? ").lower()
     if(language == "spanish" or language == "s"):
         api = "test-es"
         ingredient = input('Elija un ingrediente: ')
@@ -94,21 +93,20 @@ def run():
         print("Enter a valid language")
         language = input("Do you want to search in English or Spanish? ")
     
-    # ingredient = input('Enter an ingredient: ')
     
-    # input_random = input("Do you want a random recipe? Y/N ")
     
     if(input_random == "r" or input_random == "random" or input_random == "RANDOM"):
-        random_recipe_search(ingredient, api)
+        random_recipe_search(ingredient, api, language)
     elif(input_random =="c" or input_random =="check"or input_random =="CHECK"):
-        recipe_search(ingredient, api)
+        recipe_search(ingredient, api, language)
     else:
         input_random
-           
+    
+    return        
         
 run()
 
-    
+
 
 # **********************************
 # THINGS TO FIX SO FAR: the requests.get() is in both functions (recipe_search and random_recipe_search). It's repetitive and should be in it's own function, but I tried and it didn't work
