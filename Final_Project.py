@@ -1,26 +1,10 @@
-# Application ID
-# 71ca93f8
-
-
-# Application Keys
-# 11b48d20765f456984566e814c328384
-
-
-# search example: "https://api.edamam.com/search?q=chicken&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&from=0&to=3&calories=591-722&health=alcohol-free"
-
-# To make a request to the Edamam API use the following URL:
-# https://api.edamam.com/search?q={INGREDIENT}&app_id={YOUR_APP_KEY}&app_key={YOUR_APP_KEY}
-
-
-# spanish API:  https://test-es.edamam.com/search?q={INGREDIENT}&app_id={YOUR_APP_KEY}&app_key={YOUR_APP_KEY}
-
-
-    
-#=================================================================================================================================
 
 
 import requests
 import random
+from keys import app_id, app_key
+
+
 
 # function that gets all the inputs from the user (language, type of search, ingredient and random/all recipes) and the first one to execute
 def run():   
@@ -88,9 +72,7 @@ def random_ask(ingredient, api, input_random):
 
 # gets data from the API for the weekly meal planner in ENGLISH
 def get_api_calorie_data(api, calories):
-    app_id = '71ca93f8'
-    app_key = '11b48d20765f456984566e814c328384'
-    
+     
     result = requests.get('https://{}.edamam.com/search?q=calories={}&app_id={}&app_key={}'.format(api, calories, app_id, app_key))
     
     data = result.json()["hits"]
@@ -100,8 +82,7 @@ def get_api_calorie_data(api, calories):
 
 # gets data from the API for the weekly meal planner in SPANISH
 def get_api_calorie_data_sp(api, calories):
-    app_id = '71ca93f8'
-    app_key = '11b48d20765f456984566e814c328384'
+
     result = requests.get('https://{}.edamam.com/search?q=calorias={}&app_id={}&app_key={}'.format(api, calories, app_id, app_key))
     
     data = result.json()["hits"]
@@ -111,8 +92,7 @@ def get_api_calorie_data_sp(api, calories):
    
 # gets data from the API for the recipe search
 def get_api_data(api, ingredient):
-    app_id = '71ca93f8'
-    app_key = '11b48d20765f456984566e814c328384'
+   
     result = requests.get('https://{}.edamam.com/search?q={}&app_id={}&app_key={}'.format(api, ingredient, app_id,
     app_key))
     data = result.json()["hits"]
