@@ -70,24 +70,19 @@ def random_ask(ingredient, api, input_random):
 
           
 
-# gets data from the API for the weekly meal planner in ENGLISH
+# gets data from the API for the weekly meal planner
 def get_api_calorie_data(api, calories):
-     
-    result = requests.get('https://{}.edamam.com/search?q=calories={}&app_id={}&app_key={}'.format(api, calories, app_id, app_key))
+    if (api == "test-es"):
+        calories_lang = "calorias"
+    else:
+        calories_lang = "calories"
+        
+    result = requests.get('https://{}.edamam.com/search?q={}={}&app_id={}&app_key={}'.format(api, calories_lang, calories, app_id, app_key))
     
     data = result.json()["hits"]
    
     return data
 
-
-# gets data from the API for the weekly meal planner in SPANISH
-def get_api_calorie_data_sp(api, calories):
-
-    result = requests.get('https://{}.edamam.com/search?q=calorias={}&app_id={}&app_key={}'.format(api, calories, app_id, app_key))
-    
-    data = result.json()["hits"]
-   
-    return data
   
    
 # gets data from the API for the recipe search
@@ -163,10 +158,8 @@ def random_recipe_search(ingredient, api):
  
  # function for meal planner
 def meal_planner(calories, api):
-    if api == "test-es":
-        results_weekly = get_api_calorie_data_sp(api, calories)
-    else: 
-        results_weekly = get_api_calorie_data(api, calories)
+  
+    results_weekly = get_api_calorie_data(api, calories)
 
    
     # prints in console
