@@ -1,5 +1,4 @@
-The app_ID and app_KEY are privates. If you want to try the program, login into the API and get your own ID and KEY. 
-
+The app_ID and app_KEY are privates. For running the program, you'll need to to sign up or log in and then save your own app_id and app_key into a file in the same directory than the program file.
 
 
 To make a request to the Edamam API use the following URL:
