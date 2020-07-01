@@ -1,5 +1,4 @@
 
-
 import requests
 import random
 from keys import app_id, app_key
@@ -9,42 +8,42 @@ from keys import app_id, app_key
 # function that gets all the inputs from the user (language, type of search, ingredient and random/all recipes) and the first one to execute
 def run():   
     # separates english and spanish navigation
-    language = input("Do you want to search in English or Spanish? ").lower()
+    language = input("Do you want to search in English (enter: E) or Spanish (enter: S)? ").lower()
     
     # SPANISH
     if (language == "spanish" or language == "s"):
         api = "test-es"
-        input_choice = input('Quiere elegir un ingrediente para buscar una receta (ingrese: I) o quiere elegir por cantidad de calorías(ingrese: C)? (I/C) ').lower()
+        input_choice = input('Quiere elegir un ingrediente para buscar una receta (ingrese: I) o quiere elegir por cantidad de calorías(ingrese: C)? ').lower()
         
         #recipe search
         if (input_choice == 'i'):
             ingredient = input('Elija un ingrediente: ')
-            input_random = input("¿Quiere una receta al azar (ingrese: R) o quiere revisar el catálogo (ingrese: C)? R/C  ").lower()
+            input_random = input("¿Quiere una receta al azar (ingrese: R) o quiere revisar el catálogo (ingrese: C)? ").lower()
 
         # calls the function that decides if the user wants all the recipes or a random recipe
             random_ask(ingredient, api, input_random)
             
         #meal planner
         elif (input_choice== 'c'):
-            calories = int(input("Cuántas calorías quiere consumir? "))
+            calories = int(input("Cuántas calorías quiere consumir en una comida? "))
             meal_planner(calories, api)
         
     # ENGLISH   
     elif(language == "english" or language == "e"):
         api = "api"  
-        input_choice = input('Do you want to choose by ingredient or by calories? i/c ').lower()
+        input_choice = input('Do you want to choose by ingredient (enter: I) or by calories (enter: C)? ').lower()
         
         # recipe search
         if (input_choice == 'i'):
             ingredient = input('Enter an ingredient: ')
-            input_random = input("Do you want a random recipe (enter: R) or do you want to check our catalogue (enter: C)? R/C ").lower()
+            input_random = input("Do you want a random recipe (enter: R) or do you want to check our catalogue (enter: C)? ").lower()
             
             # calls the function that decides if the user wants all the recipes or a random recipe
             random_ask(ingredient, api, input_random)
         
         # meal planner  
         elif (input_choice == 'c'):
-            calories = int(input("what's the maximum calories for each meal? "))
+            calories = int(input("what's the maximum calories for your meal? "))
             meal_planner(calories, api)
             
                   
@@ -138,7 +137,10 @@ def random_recipe_search(ingredient, api):
 #prints in console 
     print("\n")
     print(recipe["label"])
-    print("Ingredients:")
+    if api == "test-es":
+        print("Ingredientes:")
+    else:
+        print("Ingredients:")
     for ingredient in recipe["ingredientLines"]:
         print(f"-{ingredient}")
         
@@ -167,7 +169,10 @@ def meal_planner(calories, api):
         # print("Recipe:")
         print(recipe['label'])
         print("------------------------------")
-        print("Ingredients:" ) 
+        if api == "test-es":
+            print("Ingredientes:")
+        else:
+            print("Ingredients:") 
         for ingredient in recipe["ingredientLines"]:
             print(f"-{ingredient}")
         print("=============================")
@@ -190,5 +195,4 @@ def meal_planner(calories, api):
     
 # *******program starts here********          
 run()
-
 
