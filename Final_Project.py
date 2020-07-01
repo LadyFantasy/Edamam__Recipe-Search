@@ -50,12 +50,11 @@ def run():
                   
     else:
         print("Enter a valid language ")
-        # language = input("Do you want to search in English or Spanish? ")
         run()
 
 
 
-#  function that divides the search between random recipe and all the recipes 
+#  function that divides the search between random recipe and catalogue
 def random_ask(ingredient, api, input_random):
     
     if(input_random == "r" or input_random == "random"):
@@ -70,7 +69,7 @@ def random_ask(ingredient, api, input_random):
 
           
 
-# gets data from the API for the weekly meal planner
+# gets data from the API for the meal planner
 def get_api_calorie_data(api, calories):
     if (api == "test-es"):
         calories_lang = "calorias"
@@ -159,11 +158,11 @@ def random_recipe_search(ingredient, api):
  # function for meal planner
 def meal_planner(calories, api):
   
-    results_weekly = get_api_calorie_data(api, calories)
+    results_meal = get_api_calorie_data(api, calories)
 
    
     # prints in console
-    for result in results_weekly[0:3]:
+    for result in results_meal[0:3]:
         recipe = result['recipe']
         # print("Recipe:")
         print(recipe['label'])
